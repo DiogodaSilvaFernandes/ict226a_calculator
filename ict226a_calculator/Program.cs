@@ -41,12 +41,22 @@
 
                 case '/':
                     result = Divide(op1, op2);
+
+                    if (result == -1)
+                    {
+                        DisplayMessage("Vous ne pouvez pas faire un nombre divisé par 0 !");
+                        return;
+                    }
+
                     break;
-                //TODO Add default case (exception ?)
+
+                default:
+                    DisplayMessage("L'opérateur demandé n'est pas disponible.");
+                    break;
             }
             DisplayResult(op1, oper, op2, result);
-            
-            //TODO What about reset result to get a clean environnement before the next user's request ?
+
+            result = 0;
         }
 
         /// <summary>
@@ -139,8 +149,8 @@
         /// <returns></returns>
         static int Divide(int op1, int op2)
         {
-            //TODO Add division by zero protection
-            return op1 / op2;
+            if (op2 == 0) return -1;
+            else return op1 / op2;
         }
     }
 }
