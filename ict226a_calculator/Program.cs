@@ -25,40 +25,18 @@
             op1 = AskUserForInteger("Rentrez votre premier numéro :");
             op2 = AskUserForInteger("Rentrez votre second numéro :");
 
-            switch (oper)
+            (int calcResult, string error) tempResult = PerformCalculation(op1, oper, op2);
+
+            if (tempResult.error == "")
             {
-                case '+':
-                    result = Add(op1, op2);
-                    break;
-
-                case '-':
-                    result = Substract(op1, op2);
-                    break;
-
-                case '*':
-                    result = Multiply(op1, op2);
-                    break;
-
-                case '/':
-
-                    (int calcResult, bool error)tempResult = Divide(op1, op2);
-
-                    if (tempResult.error == true)
-                    {
-                        DisplayMessage("Vous ne pouvez pas faire un nombre divisé par 0 !");
-                        return;
-                    }
-                    else
-                    {
-                        result = tempResult.calcResult;
-                    }
-
-                    break;
-
-                default:
-                    DisplayMessage("L'opérateur demandé n'est pas disponible.");
-                    break;
+                result = tempResult.calcResult;
             }
+            else
+            {
+                DisplayMessage(tempResult.error);
+                return;
+            }
+
             DisplayResult(op1, oper, op2, result);
 
             result = 0;
@@ -113,51 +91,45 @@
             Console.WriteLine(message);
         }
 
-        /// <summary>
-        /// This method is designed to return the addition of 2 numbers
-        /// </summary>
-        /// <param name="op1">First number choosed by the user</param>
-        /// <param name="op2">Second number choosed by the user</param>
-        /// <returns></returns>
-        static int Add(int op1, int op2)
+        static (int,string) PerformCalculation(int op1, char oper, int op2)
         {
-            return op1 + op2;
-        }
+            MathsBasicOperation mathsOperations = new MathsBasicOperation();
+            (int calcResult, string error) result = (0, "");
 
-        /// <summary>
-        /// This method is designed to return the substraction of 2 numbers
-        /// </summary>
-        /// <param name="op1">First number choosed by the user</param>
-        /// <param name="op2">Second number choosed by the user</param>
-        /// <returns></returns>
-        static int Substract(int op1, int op2)
-        {
-            return op1 - op2;
-        }
+            switch (oper)
+            {
+                case '+':
+                    result.calcResult = mathsOperations.Add(op1, op2);
+                    break;
 
-        /// <summary>
-        /// This method is designed to return the multiplication of 2 numbers
-        /// </summary>
-        /// <param name="op1">First number choosed by the user</param>
-        /// <param name="op2">Second number choosed by the user</param>
-        /// <returns></returns>
-        static int Multiply(int op1, int op2)
-        {
-            return op1 * op2;
-        }
+                case '-':
+                    result.calcResult = mathsOperations.Substract(op1, op2);
+                    break;
 
-        /// <summary>
-        /// This method is designed to return the division of 2 numbers
-        /// </summary>
-        /// <param name="op1">First number choosed by the user</param>
-        /// <param name="op2">Second number choosed by the user</param>
-        /// <returns></returns>
-        static (int,bool) Divide(int op1, int op2)
-        {
-            (int calcResult, bool error) result = (0,false);
+                case '*':
+                    result.calcResult = mathsOperations.Multiply(op1, op2);
+                    break;
 
-            if (op2 == 0) result.error = true;
-            else result.calcResult = op1 / op2;
+                case '/':
+
+                    (int calcResult, bool error) tempResult = mathsOperations.Divide(op1, op2);
+
+                    if (tempResult.error == true)
+                    {
+                        result.error = "Vous ne pouvez pas faire un nombre divisé par 0 !";
+                        return result;
+                    }
+                    else
+                    {
+                        result.calcResult = tempResult.calcResult;
+                    }
+
+                    break;
+
+                default:
+                    DisplayMessage("L'opérateur demandé n'est pas disponible.");
+                    break;
+            }
 
             return result;
         }
