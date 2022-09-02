@@ -40,12 +40,17 @@
                     break;
 
                 case '/':
-                    result = Divide(op1, op2);
 
-                    if (result == -1)
+                    (int calcResult, bool error)tempResult = Divide(op1, op2);
+
+                    if (tempResult.error == true)
                     {
                         DisplayMessage("Vous ne pouvez pas faire un nombre divisé par 0 !");
                         return;
+                    }
+                    else
+                    {
+                        result = tempResult.calcResult;
                     }
 
                     break;
@@ -147,10 +152,14 @@
         /// <param name="op1">First number choosed by the user</param>
         /// <param name="op2">Second number choosed by the user</param>
         /// <returns></returns>
-        static int Divide(int op1, int op2)
+        static (int,bool) Divide(int op1, int op2)
         {
-            if (op2 == 0) return -1;
-            else return op1 / op2;
+            (int calcResult, bool error) result = (0,false);
+
+            if (op2 == 0) result.error = true;
+            else result.calcResult = op1 / op2;
+
+            return result;
         }
     }
 }
