@@ -42,9 +42,11 @@
                 case '/':
                     result = Divide(op1, op2);
                     break;
+                //TODO Add default case (exception ?)
             }
-
             DisplayResult(op1, oper, op2, result);
+            
+            //TODO What about reset result to get a clean environnement before the next user's request ?
         }
 
         /// <summary>
@@ -137,6 +139,7 @@
         /// <returns></returns>
         static int Divide(int op1, int op2)
         {
+            //TODO Add division by zero protection
             return op1 / op2;
         }
     }
