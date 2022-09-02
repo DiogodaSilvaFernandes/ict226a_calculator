@@ -91,6 +91,13 @@
             Console.WriteLine(message);
         }
 
+        /// <summary>
+        /// This method is design to perform a calculation using the MathsBasicOperation class
+        /// </summary>
+        /// <param name="op1">First number choosed by the user</param>
+        /// <param name="oper">Math operator choosed by the user</param>
+        /// <param name="op2">Second number choosed by the user</param>
+        /// <returns>Calculation result (add/substract/multiply/divide)</returns>
         static (int,string) PerformCalculation(int op1, char oper, int op2)
         {
             MathsBasicOperation mathsOperations = new MathsBasicOperation();
