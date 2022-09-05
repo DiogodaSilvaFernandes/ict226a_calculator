@@ -43,14 +43,9 @@ namespace Calculator
         /// <param name="op1">First number choosed by the user</param>
         /// <param name="op2">Second number choosed by the user</param>
         /// <returns></returns>
-        public (int,bool) Divide(int op1, int op2)
+        public int Divide(int op1, int op2)
         {
-            (int calcResult, bool error) result = (0, false);
-
-            if (op2 == 0) result.error = true;
-            else result.calcResult = op1 / op2;
-
-            return result;
+            return op1 / op2;
         }
     }
 }

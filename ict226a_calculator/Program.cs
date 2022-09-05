@@ -23,19 +23,15 @@
             } while(!operators.Contains(oper));
 
             op1 = AskUserForInteger("Rentrez votre premier numéro :");
-            op2 = AskUserForInteger("Rentrez votre second numéro :");
 
-            (int calcResult, string error) tempResult = PerformCalculation(op1, oper, op2);
+            do
+            {
+                op2 = AskUserForInteger("Rentrez votre second numéro :");
 
-            if (tempResult.error == "")
-            {
-                result = tempResult.calcResult;
-            }
-            else
-            {
-                DisplayMessage(tempResult.error);
-                return;
-            }
+                if (op2 == 0) DisplayMessage("Vous ne pouvez pas diviser un nombre par 0 !");
+            } while(op2 == 0);
+
+            result = PerformCalculation(op1, oper, op2);
 
             DisplayResult(op1, oper, op2, result);
 
@@ -98,39 +94,27 @@
         /// <param name="oper">Math operator choosed by the user</param>
         /// <param name="op2">Second number choosed by the user</param>
         /// <returns>Calculation result (add/substract/multiply/divide)</returns>
-        static (int,string) PerformCalculation(int op1, char oper, int op2)
+        static int PerformCalculation(int op1, char oper, int op2)
         {
             MathsBasicOperation mathsOperations = new MathsBasicOperation();
-            (int calcResult, string error) result = (0, "");
+            int result = 0;
 
             switch (oper)
             {
                 case '+':
-                    result.calcResult = mathsOperations.Add(op1, op2);
+                    result = mathsOperations.Add(op1, op2);
                     break;
 
                 case '-':
-                    result.calcResult = mathsOperations.Substract(op1, op2);
+                    result = mathsOperations.Substract(op1, op2);
                     break;
 
                 case '*':
-                    result.calcResult = mathsOperations.Multiply(op1, op2);
+                    result = mathsOperations.Multiply(op1, op2);
                     break;
 
                 case '/':
-
-                    (int calcResult, bool error) tempResult = mathsOperations.Divide(op1, op2);
-
-                    if (tempResult.error == true)
-                    {
-                        result.error = "Vous ne pouvez pas faire un nombre divisé par 0 !";
-                        return result;
-                    }
-                    else
-                    {
-                        result.calcResult = tempResult.calcResult;
-                    }
-
+                    result = mathsOperations.Divide(op1, op2);
                     break;
 
                 default:
